@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>JColorsTerm</name>
     <description>Libreria de colores ANSI para terminal</description>
-    <url>https://github.com/yourusername/your-library</url>
+    <url>https://github.com/desmonHak/JColorsTerm</url>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
