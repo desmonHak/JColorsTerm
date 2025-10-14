@@ -28,18 +28,16 @@
 
     <developers>
         <developer>
-            <id>yourusername</id>
-            <name>Your Full Name</name>
-            <email>your.email@example.com</email>
-            <organization>Your Organization</organization>
-            <organizationUrl>https://yoursite.com</organizationUrl>
+            <id>desmonHak</id>
+            <name>David López.T</name>
+            <email>61366533+desmonHak@users.noreply.github.com</email>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/yourusername/your-library.git</connection>
-        <developerConnection>scm:git:ssh://github.com:yourusername/your-library.git</developerConnection>
-        <url>https://github.com/yourusername/your-library/tree/main</url>
+        <connection>scm:git:git://github.com/desmonHak/JColorsTerm.git</connection>
+        <developerConnection>scm:git:ssh://github.com:desmonHak/JColorsTerm.git</developerConnection>
+        <url>https://github.com/desmonHak/JColorsTerm/tree/master</url>
         <tag>HEAD</tag>
     </scm>
 
