@@ -29,12 +29,12 @@ public class Log {
      * Se puede usar de la siguiente manera:
      * String fecha = LocalDateTime.now().format(formatter);
      */
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     /**
      * metodo default para mostrar el log en la CLI
      */
-    static DumpFuncStringData default_output_cli = (log, data) -> {
+    public static DumpFuncStringData default_output_cli = (log, data) -> {
         // 22 por que las secuencias ANSI cuentan como caracteres
         System.out.printf("[%-22s:%s] %s", log.type_log, LocalDateTime.now().format(formatter), data);
     };
@@ -42,13 +42,13 @@ public class Log {
     /**
      * metodo default para mostrar el log en el File
      */
-    static DumpFuncStringData default_output_file = (log, data) -> {
+    public static DumpFuncStringData default_output_file = (log, data) -> {
         FileWriter fw = new FileWriter(log.file, true); // true para el modo append del archivo
         fw.write(String.format("[%-8s:%s] %s", log.type_log.type_error, LocalDateTime.now().format(formatter), data));
         fw.close();
     };
 
-    public void clear_file() throws IOException {
+     public void clear_file() throws IOException {
         if (this.dump_file) {
             if (file == null) {
                 file = new File(name);
@@ -131,7 +131,7 @@ public class Log {
      * @param msg datos a dumpear
      * @throws IOException error que se puede generar al escribir en el archivo
      */
-    void print_log(String msg) throws IOException {
+    public void print_log(String msg) throws IOException {
         if (this.dump_file) {
             if (file == null) {
                 file = new File(name);

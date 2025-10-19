@@ -131,7 +131,7 @@ public class BMP_Image {
      * @return devuelve la imagen en formato BMP en forma de array listo para
      * poder ser escrita en un archivo
      */
-    byte[] create_BMP() {
+    public byte[] create_BMP() {
         long size_byte_array = this.file_header.number.length +
                 this.size_img.number.length + this.reserve1.number.length +
                 this.reserve2.number.length + this.offset_init_data.number.length +

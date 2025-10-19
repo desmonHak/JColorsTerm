@@ -58,6 +58,21 @@
 
     <build>
         <plugins>
+            <!-- este plugin genera un jar con los tests -->
+            <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                    <executions>
+                        <execution>
+                            <id>tests-jar</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+            </plugin>
             <!-- Central Publishing Plugin -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
