@@ -1,4 +1,4 @@
-package io.github.desmonhak;
+package io.github.desmonhak.BMP;
 /*
  * Licencia Apache, Versión 2.0 con Modificación
  *
@@ -28,6 +28,10 @@ package io.github.desmonhak;
  * los cambios realizados entre versiones, ni revelar porciones específicas de
  * código modificado.
  */
+
+import io.github.desmonhak.JColorsTerm;
+
+import java.awt.*;
 import java.io.*;
 import java.util.Arrays;
 
@@ -83,7 +87,7 @@ public class BMP_Image {
     // la cantidad de colores importantes utilizados, o 0 cuando todos los colores son importantes; generalmente se ignora
     public IntType_forBMP important_colors         = new IntType_forBMP((byte)0, (byte)0, (byte)0, (byte)0);
 
-    // datos de la imagen(pixeles)
+    // datos de la imagen(pixeles) con el padding añadido
     public byte[] data_raw;
 
     public byte[] header_procesade;
@@ -95,7 +99,7 @@ public class BMP_Image {
      * @param height_img largo de la imagen
      * @param data_raw buffer de la imagen en formato RGB
      */
-    BMP_Image(int width_img, int height_img, byte[] data_raw) {
+    public BMP_Image(int width_img, int height_img, byte[] data_raw) {
         int bytesPerRow = width_img * 3; // 3 bytes por pixel (RGB)
         int padding = (4 - (bytesPerRow % 4)) % 4;
         int bytesPerRowWithPadding = bytesPerRow + padding;
@@ -284,4 +288,106 @@ public class BMP_Image {
         System.out.println("Todos los datos: ");
         printDataRawHex(create_BMP(), 16);
     }
+
+    /**
+     * abrir BMP estándar sin compresión, con formato 24 bits BGR, que es el más común
+     * @param filepath path de la imagen BMP a leer
+     * @return devuelve una instancia de imagen BMP
+     * @throws IOException la imagen no se pudo leer
+     */
+    public static BMP_Image readBMPFile(String filepath) throws IOException {
+        try (InputStream is = new FileInputStream(filepath)) {
+            byte[] fileHeader = new byte[14];
+            is.read(fileHeader); // Cabecera archivo BMP
+
+            byte[] dibHeader = new byte[40];
+            is.read(dibHeader); // Cabecera DIB (BITMAPINFOHEADER)
+
+            int width = ((dibHeader[7] & 0xFF) << 24) | ((dibHeader[6] & 0xFF) << 16)
+                    | ((dibHeader[5] & 0xFF) << 8) | (dibHeader[4] & 0xFF);
+            int height = ((dibHeader[11] & 0xFF) << 24) | ((dibHeader[10] & 0xFF) << 16)
+                    | ((dibHeader[9] & 0xFF) << 8) | (dibHeader[8] & 0xFF);
+
+            int bitsPerPixel = ((dibHeader[15] & 0xFF) << 8) | (dibHeader[14] & 0xFF);
+
+            int bytesPerPixel = bitsPerPixel / 8;
+            int bytesPerRow = width * bytesPerPixel;
+            int padding = (4 - (bytesPerRow % 4)) % 4;
+
+            // Posición del inicio de datos (offset)
+            int offset = ((fileHeader[13] & 0xFF) << 24) | ((fileHeader[12] & 0xFF) << 16)
+                    | ((fileHeader[11] & 0xFF) << 8) | (fileHeader[10] & 0xFF);
+
+            // Saltar hasta comenzar datos (offset header)
+            long skipped = is.skip(offset - 14 - 40);
+
+            // Leer datos con padding de filas
+            byte[] dataRaw = new byte[(bytesPerRow + padding) * height];
+            int bytesRead = 0;
+            while (bytesRead < dataRaw.length) {
+                int read = is.read(dataRaw, bytesRead, dataRaw.length - bytesRead);
+                if (read == -1) break;
+                bytesRead += read;
+            }
+
+            return new BMP_Image(width, height, dataRaw);
+        }
+    }
+    /**
+     * Extrae y devuelve el buffer original de la imagen sin padding por fila.
+     * @return byte[] buffer de imagen sin padding (width * height * 3 bytes)
+     */
+    public byte[] getDataWithoutPadding() {
+        int width = header_bmp.width_img.get_short();
+        int height = header_bmp.height_img.get_short();
+        int bytesPerRow = width * 3;
+        int padding = (4 - (bytesPerRow % 4)) % 4;
+        int bytesPerRowWithPadding = bytesPerRow + padding;
+
+        byte[] rawDataWithoutPadding = new byte[bytesPerRow * height];
+
+        for (int y = 0; y < height; y++) {
+            System.arraycopy(this.data_raw, y * bytesPerRowWithPadding, rawDataWithoutPadding, y * bytesPerRow, bytesPerRow);
+        }
+
+        return rawDataWithoutPadding;
+    }
+
+    /**
+     * Extrae y devuelve el buffer de la imagen en forma de array Color[], sin padding.
+     * @return array de Color que representa la imagen pixel por pixel.
+     */
+    public Color[] getColorsWithoutPadding() {
+        int width = header_bmp.width_img.get_short();
+        int height = header_bmp.height_img.get_short();
+        byte[] rawDataWithoutPadding = getDataWithoutPadding();
+        Color[] colors = new Color[width * height];
+
+        for (int i = 0; i < colors.length; i++) {
+            int index = i * 3;
+            int b = rawDataWithoutPadding[index] & 0xFF;
+            int g = rawDataWithoutPadding[index + 1] & 0xFF;
+            int r = rawDataWithoutPadding[index + 2] & 0xFF;
+            colors[i] = new Color(r, g, b);
+        }
+        return colors;
+    }
+
+    /**
+     * Convierte un array de objetos Color a un buffer de bytes en formato BGR.
+     * @param colors array de Color
+     * @return byte[] buffer en formato BGR (3 bytes por píxel)
+     */
+    public static byte[] colorsToBGRBuffer(Color[] colors) {
+        byte[] bgrBuffer = new byte[colors.length * 3];
+        for (int i = 0; i < colors.length; i++) {
+            Color c = colors[i];
+            bgrBuffer[i * 3] = (byte) c.getBlue();
+            bgrBuffer[i * 3 + 1] = (byte) c.getGreen();
+            bgrBuffer[i * 3 + 2] = (byte) c.getRed();
+        }
+        return bgrBuffer;
+    }
+
+
 }

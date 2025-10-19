@@ -27,7 +27,7 @@
  * los cambios realizados entre versiones, ni revelar porciones específicas de
  * código modificado.
  */
-package io.github.desmonhak.UintTypes;
+package io.github.desmonhak.BMP.UintTypes;
 
 public class IntType {
     public IntType_type type;

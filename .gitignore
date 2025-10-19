@@ -38,3 +38,6 @@ build/
 .DS_Store
 
 settings.xml
+log.txt
+Ejemplo3x60.*
+Ejemplo60x3.*

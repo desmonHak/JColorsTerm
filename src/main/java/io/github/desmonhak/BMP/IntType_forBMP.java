@@ -1,4 +1,4 @@
-package io.github.desmonhak;
+package io.github.desmonhak.BMP;
 /*
  * Licencia Apache, Versión 2.0 con Modificación
  *
@@ -30,8 +30,8 @@ package io.github.desmonhak;
  */
 
 
-import io.github.desmonhak.UintTypes.IntType;
-import io.github.desmonhak.UintTypes.IntType_type;
+import io.github.desmonhak.BMP.UintTypes.IntType;
+import io.github.desmonhak.BMP.UintTypes.IntType_type;
 
 /**
  * Clase de enteros de tamaño especifico para manejo del BMP
