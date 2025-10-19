@@ -1,0 +1,4 @@
+[submodule "BMP_image"]
+	path = BMP_image
+	url = https://github.com/desmonHak/BMP_image.git
+	branch = master
