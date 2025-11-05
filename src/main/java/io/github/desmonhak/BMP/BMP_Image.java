@@ -68,7 +68,7 @@ public class BMP_Image {
         public IntType_forBMP bit_pixel           = new IntType_forBMP((byte)0, (byte)24);
     }
 
-    Header header_bmp = new Header();
+    public Header header_bmp = new Header();
     // metodo de compresion(siempre a 0 para no compresion)
     public IntType_forBMP method_compresion       = new IntType_forBMP((byte)0, (byte)0, (byte)0, (byte)0);
 
@@ -214,6 +214,62 @@ public class BMP_Image {
         }
 
         System.out.print(sb.toString());
+    }
+
+    public IntType_forBMP getFile_header() {
+        return file_header;
+    }
+
+    public IntType_forBMP getSize_img() {
+        return size_img;
+    }
+
+    public IntType_forBMP getReserve1() {
+        return reserve1;
+    }
+
+    public IntType_forBMP getReserve2() {
+        return reserve2;
+    }
+
+    public IntType_forBMP getOffset_init_data() {
+        return offset_init_data;
+    }
+
+    public Header getHeader_bmp() {
+        return header_bmp;
+    }
+
+    public IntType_forBMP getMethod_compresion() {
+        return method_compresion;
+    }
+
+    public IntType_forBMP getSize_img_raw() {
+        return size_img_raw;
+    }
+
+    public IntType_forBMP getHorizontal_resolution() {
+        return horizontal_resolution;
+    }
+
+    public IntType_forBMP getVertical_resolution() {
+        return vertical_resolution;
+    }
+
+    public IntType_forBMP getColor_palette() {
+        return color_palette;
+    }
+
+    public IntType_forBMP getImportant_colors() {
+        return important_colors;
+    }
+
+    public byte[] getData_raw() {
+        return data_raw;
+    }
+
+    public byte[] getHeader_procesade() {
+        return header_procesade;
     }
 
     /**
