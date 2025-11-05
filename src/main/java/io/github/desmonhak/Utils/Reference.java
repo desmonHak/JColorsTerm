@@ -77,6 +77,9 @@ public class Reference<_Object>
      */
     public AtomicReference<_Object> value = null;
 
+    /**
+     * profundidad
+     */
     private int depth = 0;
 
     /**
