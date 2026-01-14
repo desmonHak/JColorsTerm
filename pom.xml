@@ -6,15 +6,18 @@
 
     <groupId>io.github.desmonhak</groupId>
     <artifactId>JColorsTerm</artifactId>
-    <version>3.0</version>
+    <version>3.1<!--SNAPSHOT--></version>
     <packaging>jar</packaging>
     <name>JColorsTerm</name>
     <description>Libreria de colores ANSI para terminal</description>
     <url>https://github.com/desmonHak/JColorsTerm</url>
 
     <properties>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
+        <!-- Target Java 11 (máxima compatibilidad) -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!-- Cross-compilation (funciona en JDK 11+) -->
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -30,6 +33,11 @@
             <artifactId>annotations</artifactId>
             <version>13.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.4.0</version>
         </dependency>
     </dependencies>
 
@@ -58,6 +66,18 @@
 
     <build>
         <plugins>
+            <!--Este plugin permite que la libreria sea portable a otras versiones de java-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+
             <!-- este plugin genera un jar con los tests -->
             <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

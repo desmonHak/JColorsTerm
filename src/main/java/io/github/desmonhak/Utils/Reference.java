@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.Serial;
+//import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -27,7 +27,8 @@ public class Reference<_Object>
         Cloneable // para clonaos
 {
 
-    @Serial
+    //@Serial
+    @SuppressWarnings("serial")
     private static final long serialVersionUID = 1L;
 
     /**
@@ -242,6 +243,18 @@ public class Reference<_Object>
      */
     public boolean isNull() {
         return value.get() == null;
+    }
+
+    /**
+     * Se puede usar para syncronizar referencias con valores.
+     * @param ref Referencia nueva, antigua o nula. En caso de ser nula se crea una nueva con el valor contenido.
+     *            Esta refencia no debe estar bloqueada para permitirse el cambio de valores. Si tiene asociado un
+     *            historial de cambios y esta funcionalidad fue activada, se registrara el cambio realizado
+     * @param value valor que asignar o reasignar a la referencia.
+     */
+    private static void syncReference(Reference ref, Object value) {
+        if (ref == null) ref = new Reference<>();
+        ref.setValue(value);
     }
 
     /**
@@ -593,13 +606,14 @@ public class Reference<_Object>
 
 
     /**
-     * Método que se llama automáticamente durante la serialización.
+     * Metodo que se llama automáticamente durante la serialización.
      * Permite personalizar qué se serializa y cómo.
      *
      * @param out objeto de salida para la serialización
      * @throws IOException si ocurre un error durante la serialización
      */
-    @Serial
+    //@Serial
+    @SuppressWarnings("serial")
     private void writeObject(@NotNull java.io.ObjectOutputStream out) throws java.io.IOException {
         // Se serializa el valor, profundidad y cualquier otro campo necesario
         out.defaultWriteObject();
@@ -608,14 +622,15 @@ public class Reference<_Object>
     }
 
     /**
-     * Método que se llama automáticamente durante la deserialización.
+     * Metodo que se llama automáticamente durante la deserialización.
      * Permite personalizar cómo se reconstruye el objeto.
      *
      * @param in objeto de entrada para la deserialización
      * @throws IOException si ocurre un error durante la lectura
      * @throws ClassNotFoundException si no se encuentra la clase del valor serializado
      */
-    @Serial
+    //@Serial
+    @SuppressWarnings("serial")
     private void readObject(@NotNull java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
         // Reestáble los campos principales
         in.defaultReadObject();

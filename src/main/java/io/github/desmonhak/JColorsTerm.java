@@ -404,7 +404,7 @@ public class JColorsTerm {
         int width = 127;
         double frequency = Math.PI * 2/str.length();
 
-        for (var i = 0; i < str.length(); ++i) {
+        for (int i = 0; i < str.length(); ++i) {
             int red     = (int) (Math.sin(frequency * i + red_frequency + phase) * width + center);
             int green   = (int) (Math.sin(frequency * i + green_frequency + phase) * width + center);
             int blue    = (int) (Math.sin(frequency * i + blue_frequency + phase) * width + center);

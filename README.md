@@ -15,7 +15,7 @@ https://javadoc.io/doc/io.github.desmonhak/JColorsTerm
 <dependency>
     <groupId>io.github.desmonhak</groupId>
     <artifactId>JColorsTerm</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
 </dependency>
 ```
 
