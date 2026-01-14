@@ -11,6 +11,8 @@ Puede situar la dependencia en Maven:
 
 https://javadoc.io/doc/io.github.desmonhak/JColorsTerm
 
+- pagina ejemplos -> https://desmonhak.github.io/JColorsTerm
+
 ```java
 <dependency>
     <groupId>io.github.desmonhak</groupId>
